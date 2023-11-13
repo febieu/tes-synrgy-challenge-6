@@ -2,14 +2,18 @@ package com.anangkur.synrgychapter6.presentation.profile
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.work.WorkInfo
 import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityProfileBinding
 import com.anangkur.synrgychapter6.di.ViewModelFactory
+import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
+import com.anangkur.synrgychapter6.presentation.blur.BlurActivity
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -37,6 +41,10 @@ class ProfileActivity : AppCompatActivity() {
         binding?.buttonLogout?.setOnClickListener {
             viewModel.logout()
         }
+
+        binding?.ivProfile?.setOnClickListener {
+            BlurActivity.startActivity(this)
+        }
     }
 
     private fun observeLiveData() {
@@ -45,6 +53,7 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.loading.observe(this, ::handleLoading)
         viewModel.error.observe(this, ::handleError)
         viewModel.logout.observe(this, ::handleLogout)
+        viewModel.outputWorkerInfos.observe(this, ::handleWorkerInfos)
     }
 
     private fun handleUsername(username: String?) {
@@ -66,6 +75,22 @@ class ProfileActivity : AppCompatActivity() {
     private fun handleLogout(isLogout: Boolean) {
         if (isLogout) {
             LoginActivity.startActivity(this)
+        }
+    }
+
+    private fun handleWorkerInfos(workerInfos: List<WorkInfo>) {
+        if (workerInfos.isEmpty()) {
+            return
+        }
+
+        val workerInfo = workerInfos.last()
+        if (workerInfo.state.isFinished) {
+            val outputImageUrl = workerInfo.outputData.getString(KEY_IMAGE_URI)
+            if (!outputImageUrl.isNullOrEmpty()) {
+                binding?.ivProfile?.setImageURI(Uri.parse(outputImageUrl))
+            }
+        } else {
+            // todo handle in progress
         }
     }
 }

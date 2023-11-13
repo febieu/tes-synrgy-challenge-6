@@ -4,7 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
+import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
@@ -14,7 +17,10 @@ import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
     private val profileRepository: ProfileRepository,
+    private val workManager: WorkManager,
 ) : ViewModel() {
+
+    internal val outputWorkerInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading

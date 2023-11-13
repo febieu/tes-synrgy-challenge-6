@@ -10,4 +10,9 @@
     <string name="button_register">Register</string>
     <string name="button_logout">Logout</string>
     <string name="button_profile">Profile</string>
+    <string name="text_select_blur_amount">Select blur amount</string>
+    <string name="text_little_blurred">a little blurred</string>
+    <string name="text_more_blurred">more blurred</string>
+    <string name="text_the_most_blurred">the most blurred</string>
+    <string name="button_go">Go</string>
 </resources>

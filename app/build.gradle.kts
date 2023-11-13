@@ -64,4 +64,10 @@ dependencies {
 
     // local
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    // work manager
+    implementation("androidx.work:work-runtime-ktx:2.8.1")
+
+    // image picker
+    implementation("com.github.esafirm:android-image-picker:3.0.0")
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginViewModel
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterViewModel
+import com.anangkur.synrgychapter6.presentation.blur.BlurViewModel
 import com.anangkur.synrgychapter6.presentation.home.HomeViewModel
 import com.anangkur.synrgychapter6.presentation.profile.ProfileViewModel
 
@@ -32,6 +33,11 @@ class ViewModelFactory(private val provider: Provider) : ViewModelProvider.Facto
             )
             ProfileViewModel::class.java -> ProfileViewModel(
                 profileRepository = provider.localRepository,
+                workManager = provider.workManager,
+            )
+            BlurViewModel::class.java -> BlurViewModel(
+                application = provider.context,
+                workManager = provider.workManager,
             )
             else -> throw UnsupportedOperationException()
         } as T

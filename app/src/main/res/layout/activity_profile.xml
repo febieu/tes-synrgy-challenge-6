@@ -5,13 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     android:orientation="vertical">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_profile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:background="@color/cardview_dark_background"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/hint_username"
         android:enabled="false">
         <com.google.android.material.textfield.TextInputEditText
@@ -25,9 +33,9 @@
         android:id="@+id/til_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
         android:hint="@string/hint_email"
-        android:enabled="false">
+        android:enabled="false"
+        android:layout_marginTop="8dp">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_email"
             android:layout_width="match_parent"
@@ -39,13 +47,13 @@
     <ViewFlipper
         android:id="@+id/flipper_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Button.Primary"
-            android:layout_margin="10dp"
             android:text="@string/button_logout"/>
         <ProgressBar
             android:layout_width="wrap_content"

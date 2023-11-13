@@ -1,10 +1,10 @@
 package com.anangkur.synrgychapter6.di
 
-import android.content.Context
+import android.app.Application
+import androidx.work.WorkManager
 import com.anangkur.synrgychapter6.data.local.DataStoreManager
 import com.anangkur.synrgychapter6.data.local.LocalRepository
 import com.anangkur.synrgychapter6.data.remote.RemoteRepository
-import com.anangkur.synrgychapter6.data.remote.service.FakeTMDBService
 import com.anangkur.synrgychapter6.data.remote.service.TMDBService
 import com.chuckerteam.chucker.api.ChuckerInterceptor
 import okhttp3.OkHttpClient
@@ -13,8 +13,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class Provider(
-    private val context: Context,
+   val context: Application,
 ) {
+
+    val workManager = WorkManager.getInstance(context)
 
     private val chucker = ChuckerInterceptor(context)
 

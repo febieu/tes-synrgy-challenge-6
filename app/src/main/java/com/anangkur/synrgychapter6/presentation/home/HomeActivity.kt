@@ -9,7 +9,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.anangkur.synrgychapter6.Application
-import com.anangkur.synrgychapter6.data.remote.service.TMDBService
 import com.anangkur.synrgychapter6.databinding.ActivityHomeBinding
 import com.anangkur.synrgychapter6.di.ViewModelFactory
 import com.anangkur.synrgychapter6.domain.Movie

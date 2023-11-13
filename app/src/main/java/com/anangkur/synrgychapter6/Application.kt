@@ -10,6 +10,6 @@ class Application : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        provider = Provider(applicationContext)
+        provider = Provider(this)
     }
 }
