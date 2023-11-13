@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.home.HomeActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_title"
+        style="@style/heading_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_home"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:padding="10dp"/>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_below="@id/tv_title"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_movie"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/item_movie"
+        android:layout_below="@id/progress"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_profile"
+        style="@style/Button.Primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="@string/button_profile"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>
