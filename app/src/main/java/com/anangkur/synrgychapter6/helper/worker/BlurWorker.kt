@@ -19,7 +19,8 @@ class BlurWorker(
             val picture = BitmapFactory.decodeStream(
                 context.contentResolver.openInputStream(Uri.parse(resourceUri))
             )
-            val output = blurBitmap(picture, context)
+            val output = monochromeBitmap(picture, context)
+            //val output = blurBitmap(picture, context)
             val outputUri = writeBitmapToFile(context, output)
 
             makeStatusNotification("Output is $outputUri", context)

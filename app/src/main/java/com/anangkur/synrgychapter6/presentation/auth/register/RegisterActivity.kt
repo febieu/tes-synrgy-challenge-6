@@ -2,15 +2,12 @@ package com.anangkur.synrgychapter6.presentation.auth.register
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
-import com.anangkur.synrgychapter6.Application
-import com.anangkur.synrgychapter6.R
+import androidx.appcompat.app.AppCompatActivity
 import com.anangkur.synrgychapter6.databinding.ActivityRegisterBinding
-import com.anangkur.synrgychapter6.di.ViewModelFactory
 import com.anangkur.synrgychapter6.presentation.home.HomeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -21,9 +18,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private var binding: ActivityRegisterBinding? = null
-    private val viewModel by viewModels<RegisterViewModel> {
-        ViewModelFactory.getInstance((application as Application).provider)
-    }
+    private val viewModel by viewModel<RegisterViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

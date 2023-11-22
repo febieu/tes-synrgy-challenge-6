@@ -70,4 +70,9 @@ dependencies {
 
     // image picker
     implementation("com.github.esafirm:android-image-picker:3.0.0")
+
+    // di koin
+    implementation("io.insert-koin:koin-bom:3.5.1")
+    implementation("io.insert-koin:koin-android")
+    implementation("io.insert-koin:koin-androidx-workmanager")
 }

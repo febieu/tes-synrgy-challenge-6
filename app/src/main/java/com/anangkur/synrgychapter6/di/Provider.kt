@@ -12,11 +12,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Deprecated(message = "replaced by library", level = DeprecationLevel.ERROR)
 class Provider(
    val context: Application,
 ) {
 
-    val workManager = WorkManager.getInstance(context)
+    //val workManager = WorkManager.getInstance(context)
 
     private val chucker = ChuckerInterceptor(context)
 

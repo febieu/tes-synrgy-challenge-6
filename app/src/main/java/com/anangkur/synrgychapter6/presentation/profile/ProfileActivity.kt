@@ -3,17 +3,15 @@ package com.anangkur.synrgychapter6.presentation.profile
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.work.WorkInfo
-import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityProfileBinding
-import com.anangkur.synrgychapter6.di.ViewModelFactory
 import com.anangkur.synrgychapter6.helper.worker.KEY_IMAGE_URI
 import com.anangkur.synrgychapter6.presentation.auth.login.LoginActivity
 import com.anangkur.synrgychapter6.presentation.blur.BlurActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -24,9 +22,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private var binding: ActivityProfileBinding? = null
-    private val viewModel by viewModels<ProfileViewModel> {
-        ViewModelFactory.getInstance((application as Application).provider)
-    }
+    private val viewModel by viewModel<ProfileViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

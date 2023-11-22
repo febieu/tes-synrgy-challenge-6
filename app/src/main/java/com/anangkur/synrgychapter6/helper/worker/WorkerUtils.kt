@@ -24,6 +24,10 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import android.renderscript.Allocation
@@ -132,6 +136,23 @@ fun blurBitmap(bitmap: Bitmap, applicationContext: Context): Bitmap {
         rsContext.finish()
     }
 }
+
+fun monochromeBitmap(bmpSrc: Bitmap, applicationContext: Context): Bitmap {
+    val width = bmpSrc.width
+    val height = bmpSrc.height
+    val bmpMonochrome = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bmpMonochrome)
+    val ma = ColorMatrix()
+    ma.setSaturation(0f)
+
+    val paint = Paint()
+    paint.colorFilter = ColorMatrixColorFilter(ma)
+
+    canvas.drawBitmap(bmpSrc, 0f, 0f, paint)
+
+    return bmpMonochrome
+}
+
 
 /**
  * Writes bitmap to a temporary file and returns the Uri for the file

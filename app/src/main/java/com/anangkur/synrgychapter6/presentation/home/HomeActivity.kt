@@ -5,15 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityHomeBinding
-import com.anangkur.synrgychapter6.di.ViewModelFactory
 import com.anangkur.synrgychapter6.domain.Movie
 import com.anangkur.synrgychapter6.presentation.adapter.MovieAdapter
 import com.anangkur.synrgychapter6.presentation.profile.ProfileActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeActivity : AppCompatActivity() {
 
@@ -26,9 +24,7 @@ class HomeActivity : AppCompatActivity() {
     private var binding: ActivityHomeBinding? = null
     private var movieAdapter: MovieAdapter? = null
 
-    private val viewModel by viewModels<HomeViewModel> {
-        ViewModelFactory.getInstance((application as Application).provider)
-    }
+    private val viewModel by viewModel<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -5,14 +5,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.anangkur.synrgychapter6.Application
 import com.anangkur.synrgychapter6.databinding.ActivityLoginBinding
-import com.anangkur.synrgychapter6.di.ViewModelFactory
 import com.anangkur.synrgychapter6.helper.applyLanguage
 import com.anangkur.synrgychapter6.presentation.auth.register.RegisterActivity
 import com.anangkur.synrgychapter6.presentation.home.HomeActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
@@ -27,9 +25,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private var binding: ActivityLoginBinding? = null
-    private val viewModel by viewModels<LoginViewModel> {
-        ViewModelFactory.getInstance((application as Application).provider)
-    }
+    private val viewModel by viewModel<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
