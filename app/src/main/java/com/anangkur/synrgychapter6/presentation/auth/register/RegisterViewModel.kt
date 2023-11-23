@@ -4,13 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.anangkur.synrgychapter6.domain.repository.RegisterRepository
+import com.anangkur.synrgychapter6.domain.repository.AuthRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class RegisterViewModel(
-    private val registerRepository: RegisterRepository,
+    //use case register
+    //01:22:20 finish usecase
+    private val registerUseCase: RegisterUseCase,
+    //private val authRepository: AuthRepository,
+    //private val registerRepository: RegisterRepository,
 ) : ViewModel() {
 
     private val _loading = MutableLiveData<Boolean>()
@@ -30,17 +34,46 @@ class RegisterViewModel(
     ) {
         _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            if (registerRepository.validateInput(username, email, password, confirmPassword)) {
+            try {
                 withContext(Dispatchers.Main) {
-                    _register.value = registerRepository.register(username, email, password, confirmPassword)
-                    _loading.value = false
+                    _register.value = registerUseCase.invoke(username, email, password, confirmPassword)
                 }
-            } else {
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    _error.value = e.message
+                }
+            } finally {
                 withContext(Dispatchers.Main) {
                     _loading.value = false
-                    _error.value = "Input tidak valid!"
                 }
             }
+//            try{
+//                withContext(Dispatchers.Main) {
+//                    _register.value = registerUseCase.invoke(username, email, password, confirmPassword)
+//            }catch(throwable: Throwable){
+//                withContext(Dispatchers.Main){
+//                    _error.value = throwable.message
+//                }
+//            } finally {
+//                    withContext(Dispatchers.Main){
+//                        _loading.value = false
+//                    }
+//                }
+//            }
+            }
         }
-    }
+
+
+//            if (registerUseCase.validateInput(username, email, password, confirmPassword)) {
+//                withContext(Dispatchers.Main) {
+//                    _register.value = authRepository.register(username, email, password, confirmPassword)
+////                    _loading.value = false
+//                }
+//            } else {
+//                withContext(Dispatchers.Main) {
+////                    _loading.value = false
+//                    _error.value = "Input tidak valid!"
+//                }
+//            }
+
 }

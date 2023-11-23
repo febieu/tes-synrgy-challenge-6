@@ -42,9 +42,9 @@ class Provider(
 
     private val dataStoreManager = DataStoreManager(context)
 
-    val localRepository: LocalRepository = LocalRepository(
-        dataStoreManager = dataStoreManager,
-    )
+//    val localRepository: LocalRepository = LocalRepository(
+//        dataStoreManager = dataStoreManager,
+//    )
 
     val remoteRepository: RemoteRepository = RemoteRepository(
         tmdbService = tmdbService,

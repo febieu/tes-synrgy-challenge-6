@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
+import com.anangkur.synrgychapter6.domain.repository.AccountRepository
 import com.anangkur.synrgychapter6.domain.repository.ProfileRepository
 import com.anangkur.synrgychapter6.helper.worker.TAG_OUTPUT
 import kotlinx.coroutines.Dispatchers
@@ -16,11 +17,12 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ProfileViewModel(
-    private val profileRepository: ProfileRepository,
-    private val workManager: WorkManager,
+    private val accountRepository: AccountRepository,
+    //private val profileRepository: ProfileRepository,
+    //private val workManager: WorkManager,
 ) : ViewModel() {
 
-    internal val outputWorkerInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
+    //internal val outputWorkerInfos = workManager.getWorkInfosByTagLiveData(TAG_OUTPUT)
 
     private val _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
@@ -37,12 +39,15 @@ class ProfileViewModel(
     private val _logout = MutableLiveData<Boolean>()
     val logout: LiveData<Boolean> = _logout
 
+    private val _profilePhoto = MutableLiveData<String?>()
+    val profilePhoto: LiveData<String?> = _profilePhoto
+
     fun loadProfile() {
         _loading.value = true
         viewModelScope.launch(Dispatchers.IO) {
-            profileRepository.loadUsername()
+            accountRepository.loadUsername()
                 .combine(
-                    profileRepository.loadEmail()
+                    accountRepository.loadEmail()
                 ) { username, email ->
                     Pair(username, email)
                 }
@@ -63,8 +68,23 @@ class ProfileViewModel(
 
     fun logout() {
         viewModelScope.launch(Dispatchers.Main) {
-            profileRepository.logout()
+            accountRepository.logout()
             _logout.value = true
+        }
+    }
+    fun loadProfilePhoto() {
+        viewModelScope.launch(Dispatchers.IO) {
+            accountRepository.loadProfilePhoto()
+                .catch { throwable ->
+                    withContext(Dispatchers.Main) {
+                        _error.value = throwable.message
+                    }
+                }
+                .collectLatest { profilePhoto ->
+                    withContext(Dispatchers.Main) {
+                        _profilePhoto.value = profilePhoto
+                    }
+                }
         }
     }
 }

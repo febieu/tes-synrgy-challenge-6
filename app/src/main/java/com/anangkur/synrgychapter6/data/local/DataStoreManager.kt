@@ -14,9 +14,11 @@ class DataStoreManager(
 ) {
 
     companion object {
+
         private val KEY_TOKEN = stringPreferencesKey("token")
         private val KEY_USER_NAME = stringPreferencesKey("username")
         private val KEY_EMAIL = stringPreferencesKey("email")
+        private val KEY_PROFILE_PHOTO = stringPreferencesKey("profilePhoto")
         private const val PREF_NAME = "sharedPref"
 
         private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = PREF_NAME)
@@ -56,5 +58,12 @@ class DataStoreManager(
 
     suspend fun deleteToken() {
         context.dataStore.edit { settings -> settings.remove(KEY_TOKEN) }
+    }
+    suspend fun saveProfilePhoto(profilePhoto: String) {
+        context.dataStore.edit { settings -> settings[KEY_PROFILE_PHOTO] = profilePhoto }
+    }
+
+    suspend fun loadProfilePhoto(): Flow<String?> {
+        return context.dataStore.data.map { preferences -> preferences[KEY_PROFILE_PHOTO] }
     }
 }

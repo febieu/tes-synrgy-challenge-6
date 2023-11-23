@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Photo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.WorkInfo
@@ -33,6 +34,7 @@ class ProfileActivity : AppCompatActivity() {
         observeLiveData()
 
         viewModel.loadProfile()
+        viewModel.loadProfilePhoto()
 
         binding?.buttonLogout?.setOnClickListener {
             viewModel.logout()
@@ -49,7 +51,8 @@ class ProfileActivity : AppCompatActivity() {
         viewModel.loading.observe(this, ::handleLoading)
         viewModel.error.observe(this, ::handleError)
         viewModel.logout.observe(this, ::handleLogout)
-        viewModel.outputWorkerInfos.observe(this, ::handleWorkerInfos)
+        viewModel.profilePhoto.observe(this, ::handleProfilePhoto)
+        //viewModel.outputWorkerInfos.observe(this, ::handleWorkerInfos)
     }
 
     private fun handleUsername(username: String?) {
@@ -74,19 +77,25 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleWorkerInfos(workerInfos: List<WorkInfo>) {
-        if (workerInfos.isEmpty()) {
-            return
-        }
+//    private fun handleWorkerInfos(workerInfos: List<WorkInfo>) {
+//        if (workerInfos.isEmpty()) {
+//            return
+//        }
+//
+//        val workerInfo = workerInfos.last()
+//        if (workerInfo.state.isFinished) {
+//            val outputImageUrl = workerInfo.outputData.getString(KEY_IMAGE_URI)
+//            if (!outputImageUrl.isNullOrEmpty()) {
+//                binding?.ivProfile?.setImageURI(Uri.parse(outputImageUrl))
+//            }
+//        } else {
+//            // todo handle in progress
+//        }
+//    }
 
-        val workerInfo = workerInfos.last()
-        if (workerInfo.state.isFinished) {
-            val outputImageUrl = workerInfo.outputData.getString(KEY_IMAGE_URI)
-            if (!outputImageUrl.isNullOrEmpty()) {
-                binding?.ivProfile?.setImageURI(Uri.parse(outputImageUrl))
-            }
-        } else {
-            // todo handle in progress
+    private fun handleProfilePhoto(profilePhoto: String?){
+        profilePhoto?.let{
+            binding?.ivProfile?.setImageURI(Uri.parse(profilePhoto))
         }
     }
 }
